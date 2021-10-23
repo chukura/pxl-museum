@@ -1,27 +1,50 @@
-// server/server.js
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const server = express();
-const dotenv = require('dotenv');
+const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const app = express();
+const axios = require("axios");
+const dotenv = require("dotenv");
 dotenv.config();
 
-// app.use(express.urlencoded({ extended: true }));
-server.use(express.json());
-server.use(bodyParser.json());
-server.use(bodyParser.urlencoded({ extended: true }));
-server.use(cors());
+app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
+
+const apiUrl = process.env.API_URL;
+const apiKey = process.env.API_KEY;
+const apiCulture = process.env.API_CULTURE;
+
+let url =
+  apiUrl +
+  "/" +
+  apiCulture +
+  "/collection?key=" +
+  apiKey +
+  "&format=json&p=0&ps=10&q=paint&imgonly=true";
 
 // base route
-server.get('/', (req, res) => {
-  res.send('Welcome to the PXL Museum API');
+app.get("/", (req, res) => {
+  res.send("Welcome to the PXL Museum API");
 });
 
 // routes
-require('../server/routes/collection.routes')(server);
+app.get("/api/collections/", async (req, res) => {
+  try {
+    const response = await axios.get(url);
+
+    if (res.status >= 400) {
+      throw new Error("Bad response from app");
+    }
+
+    res.status(200).json(response.data); // send response
+  } catch (err) {
+    res.send(err);
+  }
+});
 
 // set port & listen for requests
 const PORT = process.env.PORT || 7000;
-server.listen(PORT, () =>
+app.listen(PORT, () =>
   console.log(`Server is running at http://localhost:${PORT}`),
 );
