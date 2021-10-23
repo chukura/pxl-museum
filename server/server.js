@@ -2,16 +2,26 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const app = express();
-const port = 7000;
+const server = express();
+const dotenv = require('dotenv');
+dotenv.config();
 
-app.use(bodyParser.json());
-app.use(cors());
-app.use(express.urlencoded({ extended: true }));
+// app.use(express.urlencoded({ extended: true }));
+server.use(express.json());
+server.use(bodyParser.json());
+server.use(bodyParser.urlencoded({ extended: true }));
+server.use(cors());
 
-app.get('/', (req, res) => {
-  res.send(`Hi! Server is listening on port ${port}`)
+// base route
+server.get('/', (req, res) => {
+  res.send('Welcome to the PXL Museum API');
 });
 
-// listen on the port
-app.listen(port);
+// routes
+require('../server/routes/collection.routes')(server);
+
+// set port & listen for requests
+const PORT = process.env.PORT || 7000;
+server.listen(PORT, () =>
+  console.log(`Server is running at http://localhost:${PORT}`),
+);
