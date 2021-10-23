@@ -38,4 +38,4 @@ Copy the .env.example file into a new .env file, and include your Rijksmuseum AP
 
 #### Uncached request time: ~2.06s
 
-#### Cached request time: ...ms
+#### Cached request time: ~8ms

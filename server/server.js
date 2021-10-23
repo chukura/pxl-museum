@@ -1,10 +1,12 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const app = express();
+const apicache = require("apicache");
 const axios = require("axios");
 const dotenv = require("dotenv");
 dotenv.config();
+const app = express();
+const cache = apicache.middleware;
 
 app.use(express.json());
 app.use(bodyParser.json());
@@ -29,7 +31,7 @@ app.get("/", (req, res) => {
 });
 
 // routes
-app.get("/api/collections/", async (req, res) => {
+app.get("/api/collections/", cache("5 minutes"), async (req, res) => {
   try {
     const response = await axios.get(url);
 
