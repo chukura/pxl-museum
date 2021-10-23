@@ -23,7 +23,7 @@ let url =
   apiCulture +
   "/collection?key=" +
   apiKey +
-  "&format=json&p=0&ps=10&q=paint&imgonly=true";
+  "&format=json&p=0&ps=10&imgonly=true&q=";
 
 // base route
 app.get("/", (req, res) => {
@@ -31,9 +31,23 @@ app.get("/", (req, res) => {
 });
 
 // routes
-app.get("/api/collections/", cache("5 minutes"), async (req, res) => {
+app.get("/api/collection/", cache("5 minutes"), async (req, res) => {
   try {
-    const response = await axios.get(url);
+    const response = await axios.get(url + "paint");
+
+    if (res.status >= 400) {
+      throw new Error("Bad response from app");
+    }
+
+    res.status(200).json(response.data); // send response
+  } catch (err) {
+    res.send(err);
+  }
+});
+
+app.get("/api/collection-search/:q?", cache("5 minutes"), async (req, res) => {
+  try {
+    const response = await axios.get(url + req.query.q);
 
     if (res.status >= 400) {
       throw new Error("Bad response from app");
