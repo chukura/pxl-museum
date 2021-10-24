@@ -3,6 +3,7 @@
     <div
       class="relative flex items-center max-w-md leading-6 text-center lg:mx-0"
       data-form-type="search"
+      v-if="placement === 'home'"
     >
       <input
         type="text"
@@ -55,6 +56,101 @@
         <!-- prettier-ignore -->
       </button>
     </div>
+    <div
+      class="relative z-30 h-48 px-10 bg-white lg:h-32"
+      v-if="placement === 'collection'"
+    >
+      <form
+        onsubmit="return false;"
+        class="
+          flex flex-col
+          items-center
+          h-auto
+          max-w-lg
+          p-6
+          mx-auto
+          space-y-3
+          overflow-hidden
+          transform
+          -translate-y-12
+          bg-white
+          rounded-lg
+          shadow-md
+          lg:h-24 lg:max-w-6xl lg:flex-row lg:space-y-0 lg:space-x-3
+        "
+      >
+        <div
+          class="
+            w-full
+            h-12
+            border-2 border-gray-200
+            rounded-lg
+            lg:border-0 lg:w-auto lg:flex-1
+            relative
+          "
+        >
+          <input
+            type="text"
+            class="
+              w-full
+              h-full
+              px-4
+              font-medium
+              text-gray-700
+              rounded-lg
+              sm:text-lg
+              focus:bg-gray-50 focus:outline-none
+            "
+            placeholder="Enter a search term..."
+            v-model="query"
+            v-on:keyup.enter="searchCollection(query)"
+          />
+          <button
+            class="absolute right-0 h-12 px-2 mr-3"
+            v-on:click="query = ''"
+            v-if="query.length > 0"
+          >
+            <!-- prettier-ignore -->
+            <svg class="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+          </button>
+        </div>
+        <div class="w-0.5 bg-gray-100 h-10 lg:block hidden"></div>
+        <div class="w-full h-full lg:w-auto">
+          <button
+            type="submit"
+            class="
+              inline-flex
+              items-center
+              justify-center
+              w-full
+              h-full
+              px-4
+              py-2
+              text-base
+              font-medium
+              leading-6
+              text-white
+              whitespace-no-wrap
+              bg-indigo-600
+              border border-transparent
+              rounded-md
+              shadow-sm
+              hover:bg-indigo-500
+              focus:outline-none
+              focus:ring-2
+              focus:ring-offset-2
+              focus:ring-indigo-600
+              lg:w-64
+              disabled:opacity-50
+            "
+            v-on:click="searchCollection(query)"
+            :disabled="loading"
+          >
+            Search
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -65,7 +161,7 @@ import axios from "axios";
 export default defineComponent({
   name: "Search",
   props: {
-    placement: String, // 'home', or 'nav'
+    placement: String, // 'home', or 'collection'
   },
   computed: {},
   data() {
