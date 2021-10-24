@@ -142,7 +142,7 @@
         </router-link>
         <div class="w-0 h-5 border border-r border-yellow-500 opacity-25"></div>
 
-        <router-link to="collection" class="relative h-6 group">
+        <router-link to="/collection" class="relative h-6 group">
           <span
             class="
               relative

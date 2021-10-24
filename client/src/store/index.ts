@@ -4,6 +4,7 @@ export default createStore({
   state: {
     collection: [],
     collectionSearch: [],
+    selectedArtPiece: [],
   },
   getters: {
     getCollection: (state) => {
@@ -11,6 +12,9 @@ export default createStore({
     },
     getCollectionSearch: (state) => {
       return state.collectionSearch;
+    },
+    getSelectedArtPiece: (state) => {
+      return state.selectedArtPiece;
     },
   },
   mutations: {
@@ -20,6 +24,9 @@ export default createStore({
     setCollectionSearch: (state, data) => {
       state.collectionSearch = data;
     },
+    setSelectedArtPiece: (state, data) => {
+      state.selectedArtPiece = data;
+    },
   },
   actions: {
     setCollection: (context) => {
@@ -27,6 +34,9 @@ export default createStore({
     },
     setCollectionSearch: (context) => {
       context.commit("setCollectionSearch");
+    },
+    setSelectedArtPiece: (context) => {
+      context.commit("setSelectedArtPiece");
     },
   },
   modules: {},

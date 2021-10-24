@@ -17,13 +17,7 @@ const apiUrl = process.env.API_URL;
 const apiKey = process.env.API_KEY;
 const apiCulture = process.env.API_CULTURE;
 
-let url =
-  apiUrl +
-  "/" +
-  apiCulture +
-  "/collection?key=" +
-  apiKey +
-  "&format=json&p=0&ps=10&imgonly=true&q=";
+const baseUrl = `${apiUrl}/${apiCulture}/collection`;
 
 // base route
 app.get("/", (req, res) => {
@@ -33,7 +27,9 @@ app.get("/", (req, res) => {
 // routes
 app.get("/api/collection/", cache("5 minutes"), async (req, res) => {
   try {
-    const response = await axios.get(url + "paint");
+    const response = await axios.get(
+      `${baseUrl}?key=${apiKey}&format=json&p=0&ps=10&imgonly=true`,
+    );
 
     if (res.status >= 400) {
       throw new Error("Bad response from app");
@@ -47,7 +43,25 @@ app.get("/api/collection/", cache("5 minutes"), async (req, res) => {
 
 app.get("/api/collection-search/:q?", cache("5 minutes"), async (req, res) => {
   try {
-    const response = await axios.get(url + req.query.q);
+    const response = await axios.get(
+      `${baseUrl}?key=${apiKey}&format=json&p=0&ps=10&imgonly=true&q=${req.query.q}`,
+    );
+
+    if (res.status >= 400) {
+      throw new Error("Bad response from app");
+    }
+
+    res.status(200).json(response.data); // send response
+  } catch (err) {
+    res.send(err);
+  }
+});
+
+app.get("/api/collection-object/:id?", cache("5 minutes"), async (req, res) => {
+  try {
+    const response = await axios.get(
+      `${baseUrl}/${req.query.id}?key=${apiKey}`,
+    );
 
     if (res.status >= 400) {
       throw new Error("Bad response from app");
