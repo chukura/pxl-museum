@@ -142,7 +142,7 @@
         </router-link>
         <div class="w-0 h-5 border border-r border-yellow-500 opacity-25"></div>
 
-        <router-link to="#search" class="relative h-6 group">
+        <router-link to="collection" class="relative h-6 group">
           <span
             class="
               relative
@@ -158,7 +158,7 @@
               group-hover:bg-yellow-100
             "
           >
-            Explore
+            Search
           </span>
           <span
             class="absolute top-0 right-0 w-full h-10 -mr-1 bg-black rounded-lg"

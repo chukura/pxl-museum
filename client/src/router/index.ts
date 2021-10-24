@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import Home from "../views/Home.vue";
-import Collections from "../views/Collections.vue";
 import Collection from "../views/Collection.vue";
+import ArtPiece from "../views/ArtPiece.vue";
 import PageNotFound from "../views/404.vue";
 
 const routes: Array<RouteRecordRaw> = [
@@ -11,14 +11,14 @@ const routes: Array<RouteRecordRaw> = [
     component: Home,
   },
   {
-    path: "/collections",
-    name: "Collections",
-    component: Collections,
-  },
-  {
-    path: "/collections/:id",
+    path: "/collection",
     name: "Collection",
     component: Collection,
+  },
+  {
+    path: "/collection/:id",
+    name: "ArtPiece",
+    component: ArtPiece,
   },
   {
     path: "/:pathMatch(.*)*",

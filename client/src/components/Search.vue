@@ -59,9 +59,10 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from "vue";
 import axios from "axios";
 
-export default {
+export default defineComponent({
   name: "Search",
   props: {
     placement: String, // 'home', or 'nav'
@@ -82,7 +83,9 @@ export default {
     async searchCollection(query: string) {
       this.loading = true;
       try {
-        const response = await axios.get(this.url, { params: { q: query } });
+        const response: any = await axios.get(this.url, {
+          params: { q: query },
+        });
         this.collectionSearch = response.data["artObjects"];
         this.$store.commit("setCollectionSearch", this.collectionSearch);
         this.loading = false;
@@ -96,7 +99,7 @@ export default {
       }
     },
   },
-};
+});
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
