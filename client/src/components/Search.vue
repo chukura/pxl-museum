@@ -54,10 +54,7 @@
         <!-- prettier-ignore -->
       </button>
     </div>
-    <div
-      class="relative z-30 h-48 px-10 bg-white lg:h-32"
-      v-if="placement === 'collection'"
-    >
+    <div class="relative z-30 px-10 bg-white" v-if="placement === 'collection'">
       <div
         class="
           flex flex-col

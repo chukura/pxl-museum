@@ -1,13 +1,15 @@
 <template>
-  <section class="w-full bg-white">
+  <section class="w-full bg-white transform -translate-y-10">
     <div class="max-w-5xl px-10 py-10 mx-auto xl:px-0">Filters go here</div>
-    <div class="max-w-5xl px-10 py-10 mx-auto xl:px-0">
+    <div
+      v-if="collectionSearch.length > 0"
+      class="max-w-5xl px-10 py-10 mx-auto xl:px-0"
+    >
       <ul class="flex flex-wrap -mx-2 overflow-hidden">
         <li
           class="w-full px-2 my-2 overflow-hidden md:w-1/3 lg:w-1/3 xl:w-1/3"
           v-for="artpiece in collectionSearch"
           :key="artpiece.objectNumber"
-          :device="device"
         >
           <router-link :to="{ path: '/collection/' + artpiece.objectNumber }">
             <div
@@ -15,11 +17,9 @@
                 relative
                 flex
                 items-end
-                justify-center
-                mx-2
+                justify-start
                 overflow-hidden
                 bg-gray-300
-                rounded-lg
                 group
                 h-96
               "
@@ -52,7 +52,7 @@
                 "
               ></div>
               <div class="relative z-20 p-5 text-left">
-                <span
+                <!-- <span
                   class="
                     relative
                     inline-block
@@ -68,8 +68,8 @@
                   <span
                     class="absolute inset-0 transform -skew-x-6 bg-yellow-500"
                   ></span>
-                  <span class="relative">Gaming</span>
-                </span>
+                  <span class="relative">Tag</span>
+                </span> -->
                 <h2 class="my-2 font-serif text-xl font-semibold text-white">
                   {{ artpiece.title }}
                 </h2>
@@ -81,6 +81,9 @@
           </router-link>
         </li>
       </ul>
+    </div>
+    <div v-else class="max-w-5xl px-10 py-20 mx-auto xl:px-0">
+      <p>No results to display. Try searching for an art piece.</p>
     </div>
   </section>
 </template>
