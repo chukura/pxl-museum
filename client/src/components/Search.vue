@@ -161,7 +161,7 @@ export default defineComponent({
       query: "",
       collectionSearch: [],
       // url: process.env.VUE_APP_API,
-      url: "http://localhost:7000/api/collection-search",
+      url: "http://localhost:7000/api",
     };
   },
   //   mounted() {},
@@ -170,7 +170,7 @@ export default defineComponent({
     async searchCollection(query: string) {
       this.loading = true;
       try {
-        const response: any = await axios.get(this.url, {
+        const response: any = await axios.get(`${this.url}/collection-search`, {
           params: { q: query },
         });
         this.collectionSearch = response.data["artObjects"];
