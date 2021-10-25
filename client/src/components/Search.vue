@@ -60,8 +60,7 @@
       class="relative z-30 h-48 px-10 bg-white lg:h-32"
       v-if="placement === 'collection'"
     >
-      <form
-        onsubmit="return false;"
+      <div
         class="
           flex flex-col
           items-center
@@ -74,7 +73,7 @@
           transform
           -translate-y-12
           bg-white
-          rounded-lg
+          rounded-full
           shadow-md
           lg:h-24 lg:max-w-6xl lg:flex-row lg:space-y-0 lg:space-x-3
         "
@@ -97,7 +96,7 @@
               px-4
               font-medium
               text-gray-700
-              rounded-lg
+              rounded-full
               sm:text-lg
               focus:bg-gray-50 focus:outline-none
             "
@@ -131,15 +130,16 @@
               leading-6
               text-white
               whitespace-no-wrap
-              bg-indigo-600
+              rounded-full
+              bg-purple-600
               border border-transparent
               rounded-md
               shadow-sm
-              hover:bg-indigo-500
+              hover:bg-purple-700
               focus:outline-none
               focus:ring-2
               focus:ring-offset-2
-              focus:ring-indigo-600
+              focus:ring-purple-600
               lg:w-64
               disabled:opacity-50
             "
@@ -149,7 +149,7 @@
             Search
           </button>
         </div>
-      </form>
+      </div>
     </div>
   </div>
 </template>

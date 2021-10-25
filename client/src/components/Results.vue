@@ -1,5 +1,6 @@
 <template>
   <section class="w-full bg-white">
+    <div class="max-w-5xl px-10 py-10 mx-auto xl:px-0">Filters go here</div>
     <div class="max-w-5xl px-10 py-10 mx-auto xl:px-0">
       <ul class="flex flex-wrap -mx-2 overflow-hidden">
         <li

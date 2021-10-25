@@ -2,9 +2,10 @@
   <section>
     <div
       class="relative"
-      style="
-        background-image: url('https://cdn.devdojo.com/images/february2021/directory-bg.jpg');
-      "
+      style="background-size: cover"
+      :style="{
+        backgroundImage: 'url(' + require('@/assets/rembrandt.jpeg') + ')',
+      }"
     >
       <div
         class="

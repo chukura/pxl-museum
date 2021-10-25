@@ -18,17 +18,26 @@
             <h1
               class="
                 m-0
-                text-3xl
                 font-bold
                 leading-tight
                 text-left text-gray-900
                 border-solid
-                sm:text-4xl
-                md:text-5xl
+                text-2xl
+                sm:text-2xl
+                md:text-3xl
+                lg:text-4xl
               "
             >
               Search the entire
-              <span class="block text-left text-purple-700">
+              <span
+                class="
+                  block
+                  text-left text-purple-700 text-3xl
+                  sm:text-4xl
+                  md:text-5xl
+                  lg:text-5xl
+                "
+              >
                 Art Collection
               </span>
             </h1>
