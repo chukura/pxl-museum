@@ -22,7 +22,7 @@
         text-base text-right
         font-medium
         text-gray-500
-        hover:text-tertiary-green
+        hover:text-primary-red
       "
     >
       <!-- prettier-ignore -->

@@ -12,10 +12,7 @@ module.exports = {
         },
       },
       colors: {
-        "primary-green": "#38D47F",
-        "secondary-green": "#24b47e",
-        "tertiary-green": "#8AD736",
-        "primary-red": "#F92E2F",
+        "primary-red": "#DC2626",
         "secondary-red": "#e73737",
       },
     },
