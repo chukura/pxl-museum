@@ -4,7 +4,7 @@
       class="relative"
       style="background-size: cover"
       :style="{
-        backgroundImage: 'url(' + require('@/assets/rembrandt.jpeg') + ')',
+        backgroundImage: 'url(' + require('@/assets/rembrandt.jpg') + ')',
       }"
     >
       <div

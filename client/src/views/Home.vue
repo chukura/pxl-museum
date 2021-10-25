@@ -18,7 +18,6 @@
             <h1
               class="
                 m-0
-                font-bold
                 leading-tight
                 text-left text-gray-900
                 border-solid
@@ -32,6 +31,7 @@
               <span
                 class="
                   block
+                  font-bold
                   text-left text-purple-700 text-3xl
                   sm:text-4xl
                   md:text-5xl
@@ -51,7 +51,7 @@
                 xl:text-lg
               "
             >
-              Discover over 10,000 art pieces from the PXL.MUSEUM Collection,
+              Discover over 700,000 art pieces from the PXL.MUSEUM Collection,
               curated by the Rijksmuseum.
             </p>
             <Search placement="home" />

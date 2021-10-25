@@ -16,13 +16,12 @@
           font-medium
           duration-300
           border-2 border-gray-200
-          rounded-full
           outline-none
           sm:py-5 sm:pr-48
           cursor-text
           pl-7
           focus:outline-none
-          focus-within:border-purple-700
+          focus-within:border-red-700
           hover:border-gray-400
         "
         placeholder="Enter a search term"
@@ -45,8 +44,7 @@
           px-8
           mr-3
           text-white
-          bg-purple-700
-          rounded-full
+          bg-red-600
           disabled:opacity-50
         "
         v-on:click="searchCollection(query)"
@@ -73,7 +71,6 @@
           transform
           -translate-y-12
           bg-white
-          rounded-full
           shadow-md
           lg:h-24 lg:max-w-6xl lg:flex-row lg:space-y-0 lg:space-x-3
         "
@@ -96,7 +93,6 @@
               px-4
               font-medium
               text-gray-700
-              rounded-full
               sm:text-lg
               focus:bg-gray-50 focus:outline-none
             "
@@ -130,16 +126,14 @@
               leading-6
               text-white
               whitespace-no-wrap
-              rounded-full
-              bg-purple-600
+              bg-red-600
               border border-transparent
-              rounded-md
               shadow-sm
-              hover:bg-purple-700
+              hover:bg-red-700
               focus:outline-none
               focus:ring-2
               focus:ring-offset-2
-              focus:ring-purple-600
+              focus:ring-red-600
               lg:w-64
               disabled:opacity-50
             "
