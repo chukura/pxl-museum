@@ -79,15 +79,5 @@ import Results from "@/components/Results.vue";
     Results,
   },
 })
-export default class Collection extends Vue {
-  // component: {
-  //   Search,
-  // },
-  //   data() {
-  //     return {};
-  //   },
-  //   computed: {},
-  //   mounted() {},
-  //   methods: {},
-}
+export default class Collection extends Vue {}
 </script>

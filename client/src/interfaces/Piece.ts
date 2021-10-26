@@ -1,6 +1,6 @@
 export default interface Piece {
   objectNumber: string;
-  principalMaker: string;
+  principalMaker?: string;
   title: string;
   longTitle: string;
   subTitle: string; // "h 145mm × w 105mm"
@@ -13,7 +13,7 @@ export default interface Piece {
     date: string;
   };
   physicalMedium: string;
-  webImage: {
+  webImage?: {
     url: string;
     width: number;
     height: number;

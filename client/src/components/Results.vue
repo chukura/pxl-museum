@@ -111,9 +111,6 @@ export default defineComponent({
       loading: false,
     };
   },
-  //   mounted() {},
-  //   created() {},
-  //   methods: {},
 });
 </script>
 
