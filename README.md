@@ -65,7 +65,7 @@ NB: Before running the server and Copy the .env.example file into a new .env fil
 
 ### Running the Server
 
-Instructions on running the client can be found in a separate README located here: `/server/README.md`
+Instructions on running the server can be found in a separate README located here: `/server/README.md`
 
 ### General Approach
 
@@ -84,6 +84,14 @@ Performance gains due to caching were worth a separate section. Without the [api
 
 - Uncached request time: ~2.06s
 - Cached request time: ~8ms
+
+## Anagram Program
+
+The Amagram program can be found in the /anagram directory of this repository. It's a single Typescript file that can be run using [ts-node](https://www.npmjs.com/package/ts-node). You can edit the `words` array, and the program will output an organised, chunked array as instructed.
+
+### Running the Program
+
+Instructions on running the program can be found in a separate README located here: `/anagram/README.md`
 
 ## Improvements
 
