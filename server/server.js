@@ -25,22 +25,6 @@ app.get("/", (req, res) => {
 });
 
 // routes
-app.get("/api/collection/", cache("5 minutes"), async (req, res) => {
-  try {
-    const response = await axios.get(
-      `${baseUrl}?key=${apiKey}&format=json&p=0&ps=10&imgonly=true`,
-    );
-
-    if (res.status >= 400) {
-      throw new Error("Bad response from app");
-    }
-
-    res.status(200).json(response.data); // send response
-  } catch (err) {
-    res.send(err);
-  }
-});
-
 app.get(
   "/api/collection-search/:p?:ps?:q?:s?",
   cache("5 minutes"),

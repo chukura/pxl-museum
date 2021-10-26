@@ -165,15 +165,9 @@ export default defineComponent({
     return {
       loading: false,
       artPieceData: {} as Piece,
-      // url: process.env.VUE_APP_API,
       url: "http://localhost:7000/api/collection-object",
     };
   },
-  //   computed: {
-  //     artPieceImg() {
-  //       return this.artPieceData.webImage.url;
-  //     },
-  //   },
   mounted() {
     this.getArtPieceData(this.$route.params.id.toString());
   },
