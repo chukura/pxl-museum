@@ -1,6 +1,5 @@
 <template>
   <section class="w-full bg-white transform -translate-y-10">
-    <div class="max-w-5xl px-10 py-10 mx-auto xl:px-0">Filters go here</div>
     <div
       v-if="collectionSearch.length > 0"
       class="max-w-5xl px-10 py-10 mx-auto xl:px-0"
@@ -83,7 +82,12 @@
       </ul>
     </div>
     <div v-else class="max-w-5xl px-10 py-20 mx-auto xl:px-0">
-      <p>No results to display. Try searching for an art piece.</p>
+      <p class="text-2xl">
+        No results to display. Try searching for an art piece.
+      </p>
+    </div>
+    <div v-if="loadingInfinite" class="py-8">
+      <img class="h-10 w-10 m-auto" src="../assets/puff.svg" alt="Loading" />
     </div>
   </section>
 </template>
@@ -96,7 +100,10 @@ export default defineComponent({
   props: {},
   computed: {
     collectionSearch() {
-      return this.$store.getters.getCollectionSearch;
+      return this.$store.getters.getSearchResults;
+    },
+    loadingInfinite() {
+      return this.$store.getters.getLoadingInfinite;
     },
   },
   data() {

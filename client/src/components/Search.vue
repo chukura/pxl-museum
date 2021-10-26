@@ -26,7 +26,7 @@
         "
         placeholder="Enter a search term"
         v-model="query"
-        v-on:keyup.enter="searchCollection(query)"
+        v-on:keyup.enter="searchCollection(false)"
       />
       <button
         class="absolute right-28 h-12 px-2 mr-3"
@@ -47,14 +47,17 @@
           bg-red-600
           disabled:opacity-50
         "
-        v-on:click="searchCollection(query)"
+        v-on:click="searchCollection(false)"
         :disabled="loading"
       >
         Search
         <!-- prettier-ignore -->
       </button>
     </div>
-    <div class="relative z-30 px-10 bg-white" v-if="placement === 'collection'">
+    <div
+      class="relative z-30 px-10 bg-white divide-y divide-gray-50"
+      v-if="placement === 'collection'"
+    >
       <div
         class="
           flex flex-col
@@ -66,7 +69,7 @@
           space-y-3
           overflow-hidden
           transform
-          -translate-y-12
+          -translate-y-24
           bg-white
           shadow-md
           lg:h-24 lg:max-w-6xl lg:flex-row lg:space-y-0 lg:space-x-3
@@ -95,7 +98,7 @@
             "
             placeholder="Enter a search term..."
             v-model="query"
-            v-on:keyup.enter="searchCollection(query)"
+            v-on:keyup.enter="searchCollection(false)"
           />
           <button
             class="absolute right-0 h-12 px-2 mr-3"
@@ -134,12 +137,106 @@
               lg:w-64
               disabled:opacity-50
             "
-            v-on:click="searchCollection(query)"
+            v-on:click="searchCollection(false)"
             :disabled="loading"
           >
             Search
           </button>
         </div>
+      </div>
+      <div
+        class="
+          flex flex-col
+          items-center
+          h-auto
+          max-w-lg
+          p-6
+          pt-0
+          mx-auto
+          space-y-3
+          overflow-hidden
+          transform
+          -translate-y-24
+          bg-white
+          shadow-md
+          lg:h-24 lg:max-w-6xl lg:flex-row lg:space-y-0 lg:space-x-3
+          justify-between
+        "
+      >
+        <div class="flex flex-col md:flex-row">
+          <span class="w-full text-gray-400">Sort by:</span>
+          <select
+            class="
+              h-full
+              px-6
+              font-small
+              text-gray-700
+              sm:text-lg
+              focus:outline-none
+              flex-auto
+            "
+            v-model="sort"
+          >
+            <option class="w-4" value="">Select an option</option>
+            <option
+              class="w-4"
+              v-for="(term, key) in sortTerms"
+              :key="key"
+              v-on:click="clearResults()"
+              :value="term.value"
+            >
+              {{ term.label }}
+            </option>
+          </select>
+        </div>
+        <button
+          v-on:click="clearResults()"
+          class="
+            inline-flex
+            items-center
+            justify-end
+            w-full
+            h-full
+            px-4
+            py-2
+            text-base
+            font-small
+            leading-6
+            text-gray-600
+            whitespace-no-wrap
+            bg-white
+            border border-transparent
+            hover:text-gray-400
+            lg:w-64
+          "
+        >
+          <!-- prettier-ignore -->
+          <svg class="w-4 h-4 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+          Clear
+        </button>
+      </div>
+    </div>
+    <div
+      class="
+        w-screen
+        absolute
+        z-50
+        flex flex-row
+        align-center
+        max-w-lg
+        p-6
+        pt-0
+        space-y-3
+        overflow-hidden
+        transform
+        -translate-y-20
+        translate-x-28
+        justify-start
+      "
+      v-if="totalPieces > 0"
+    >
+      <div class="max-w-5xl px-10 py-10 mx-auto xl:px-0">
+        <span>Showing {{ currentTotal }} of {{ totalPieces }}</span>
       </div>
     </div>
   </div>
@@ -154,36 +251,100 @@ export default defineComponent({
   props: {
     placement: String, // 'home', or 'collection'
   },
-  computed: {},
+  computed: {
+    currentTotal() {
+      return this.searchResults.length;
+    },
+  },
   data() {
     return {
       loading: false,
+      loadingInfinite: false,
+      currentQuery: "",
       query: "",
-      collectionSearch: [],
-      // url: process.env.VUE_APP_API,
-      url: "http://localhost:7000/api",
+      sort: "",
+      pageNumber: 1, // must be >= 1
+      piecesPerPage: 15, // must remain unchanged
+      totalPieces: 0,
+      searchResults: [],
+      sortTerms: [
+        { label: "Relevance", value: "relevance" },
+        { label: "Type of artwork", value: "objecttype" },
+        { label: "Oldest to newst", value: "chronologic" },
+        { label: "Newest to oldest", value: "achronologic" },
+        { label: "Artist A-z", value: "artist" },
+        { label: "Artist Z-a", value: "artistdesc" },
+      ],
+      url: "http://localhost:7000/api/collection-search",
     };
   },
-  //   mounted() {},
-  //   created() {},
+  mounted() {
+    this.scroll();
+  },
   methods: {
-    async searchCollection(query: string) {
+    async searchCollection(shouldAppend: boolean) {
       this.loading = true;
+      this.currentQuery = this.query;
       try {
-        const response: any = await axios.get(`${this.url}/collection-search`, {
-          params: { q: query },
+        const response: any = await axios.get(this.url, {
+          params: {
+            p: this.pageNumber,
+            ps: this.piecesPerPage,
+            q: this.query,
+            s: this.sort,
+          },
         });
-        this.collectionSearch = response.data["artObjects"];
-        this.$store.commit("setCollectionSearch", this.collectionSearch);
+        this.totalPieces = response.data["count"];
+        if (shouldAppend) {
+          this.searchResults = this.searchResults.concat(
+            response.data["artObjects"],
+          );
+        } else {
+          this.searchResults = response.data["artObjects"];
+        }
+        this.$store.commit("setSearchResults", this.searchResults);
         this.loading = false;
+        this.loadingInfinite = false;
+        this.$store.commit("setLoadingInfinite", this.loadingInfinite);
 
-        if (this.placement === "nav") {
-          this.$router.push("explore"); // route the user to a results page
+        // If user is actioning from the homepage
+        if (this.placement === "home") {
+          this.$router.push("collection");
         }
       } catch (err) {
         this.loading = false;
+        this.loadingInfinite = false;
+        this.$store.commit("setLoadingInfinite", this.loadingInfinite);
         console.log(err);
       }
+    },
+    setSortValue(value: string) {
+      this.sort = value;
+    },
+    loadResults() {
+      if (this.searchResults.length < this.totalPieces) {
+        this.pageNumber++;
+        this.loadingInfinite = true;
+        this.$store.commit("setLoadingInfinite", this.loadingInfinite);
+        this.searchCollection(true);
+      }
+    },
+    clearResults() {
+      this.query = "";
+      this.sort = "";
+      this.totalPieces = 0;
+      this.searchResults = [];
+      this.$store.commit("setSearchResults", this.searchResults);
+    },
+    scroll() {
+      window.onscroll = () => {
+        const bottomOfWindow =
+          document.documentElement.scrollTop + window.innerHeight ===
+          document.documentElement.offsetHeight;
+        if (bottomOfWindow) {
+          this.loadResults();
+        }
+      };
     },
   },
 });

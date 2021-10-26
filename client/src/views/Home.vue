@@ -1,5 +1,5 @@
 <template>
-  <section class="pt-24 pb-32 bg-white overflow-hidden">
+  <section class="pt-32 pb-48 bg-white overflow-hidden h-full">
     <div class="px-8 mx-auto max-w-7xl lg:px-12 xl:px-16">
       <div class="flex flex-col lg:flex-row">
         <!-- Left Content -->

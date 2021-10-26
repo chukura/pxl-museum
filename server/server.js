@@ -41,21 +41,25 @@ app.get("/api/collection/", cache("5 minutes"), async (req, res) => {
   }
 });
 
-app.get("/api/collection-search/:q?", cache("5 minutes"), async (req, res) => {
-  try {
-    const response = await axios.get(
-      `${baseUrl}?key=${apiKey}&format=json&p=0&ps=10&imgonly=true&q=${req.query.q}`,
-    );
+app.get(
+  "/api/collection-search/:p?:ps?:q?:s?",
+  cache("5 minutes"),
+  async (req, res) => {
+    try {
+      const response = await axios.get(
+        `${baseUrl}?key=${apiKey}&format=json&imgonly=true&p=${req.query.p}&ps=${req.query.ps}&q=${req.query.q}&s=${req.query.s}`,
+      );
 
-    if (res.status >= 400) {
-      throw new Error("Bad response from app");
+      if (res.status >= 400) {
+        throw new Error("Bad response from app");
+      }
+
+      res.status(200).json(response.data); // send response
+    } catch (err) {
+      res.send(err);
     }
-
-    res.status(200).json(response.data); // send response
-  } catch (err) {
-    res.send(err);
-  }
-});
+  },
+);
 
 app.get("/api/collection-object/:id?", cache("5 minutes"), async (req, res) => {
   try {
